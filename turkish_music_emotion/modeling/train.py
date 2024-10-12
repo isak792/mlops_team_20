@@ -1,10 +1,11 @@
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 
 import joblib
 import pandas as pd
+import numpy as np
 import yaml
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
@@ -17,9 +18,11 @@ from sklearn.preprocessing import LabelEncoder
 logger = logging.getLogger(__name__)
 
 class ModelTrainer:
-    def __init__(self, data_path: Path, model_output_path: Path, model_type: str = 'knn'):
+    def __init__(self, data_path: Path, model_output_path: Path, le_output_path: Path, split_indices_path: Path, model_type: str = 'knn'):
         self.data_path = data_path
         self.model_output_path = model_output_path
+        self.le_output_path = le_output_path
+        self.split_indices_path = split_indices_path
         self.metrics_output_path = model_output_path.parent / 'metrics.json'
         self.model_type = model_type
         self.model = None
@@ -33,16 +36,27 @@ class ModelTrainer:
         logger.info("Training data loaded successfully.")
         return data
 
-    def preprocess_data(self, data: pd.DataFrame, target_column: str = 'Class') -> tuple:
+    def preprocess_data(self, data: pd.DataFrame, target_column: str = 'Class') -> Tuple[pd.DataFrame, np.ndarray]:
         """Preprocess the data by splitting features and target, and encoding the target."""
         X = data.drop(columns=[target_column])
         y = data[target_column]
         y_encoded = self.le.fit_transform(y)
         return X, y_encoded
 
-    def split_data(self, X: pd.DataFrame, y: pd.Series, test_size: float = 0.2, random_state: int = 1) -> tuple:
+    def split_data(self, X: pd.DataFrame, y: np.ndarray, test_size: float = 0.2, random_state: int = 1) -> Tuple[pd.DataFrame, pd.DataFrame, np.ndarray, np.ndarray]:
         """Split the data into training and testing sets."""
-        return train_test_split(X, y, test_size=test_size, random_state=random_state)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+        
+        # Save split indices
+        split_indices = {
+            'train_indices': X_train.index.tolist(),
+            'test_indices': X_test.index.tolist()
+        }
+        with open(self.split_indices_path, 'w') as f:
+            json.dump(split_indices, f)
+        
+        logger.info(f"Split indices saved to {self.split_indices_path}")
+        return X_train, X_test, y_train, y_test
 
     def create_model(self) -> BaseEstimator:
         """Create and return the specified model."""
@@ -55,12 +69,12 @@ class ModelTrainer:
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
 
-    def train_model(self, X_train: pd.DataFrame, y_train: pd.Series) -> None:
+    def train_model(self, X_train: pd.DataFrame, y_train: np.ndarray) -> None:
         """Train the model using the specified algorithm."""
         self.model = self.create_model()
         self.model.fit(X_train, y_train)
 
-    def evaluate_model(self, X_test: pd.DataFrame, y_test: pd.Series) -> None:
+    def evaluate_model(self, X_test: pd.DataFrame, y_test: np.ndarray) -> None:
         """Evaluate the model and store performance metrics."""
         predictions = self.model.predict(X_test)
         self.metrics = {
@@ -83,6 +97,11 @@ class ModelTrainer:
         joblib.dump(self.model, self.model_output_path)
         logger.info(f"Model saved successfully to {self.model_output_path}")
 
+    def save_label_encoder(self) -> None:
+        """Save the label encoder to a file."""
+        joblib.dump(self.le, self.le_output_path)
+        logger.info(f"Label encoder saved successfully to {self.le_output_path}")
+
     def run(self) -> None:
         """Run the entire model training pipeline."""
         data = self.load_data()
@@ -94,6 +113,7 @@ class ModelTrainer:
         
         self.save_metrics()
         self.save_model()
+        self.save_label_encoder()
 
 def load_config(config_path: Path) -> Dict[str, Any]:
     """Load configuration from a YAML file."""
@@ -107,8 +127,10 @@ if __name__ == "__main__":
     MODELS_DIR = Path(config['model']['models_dir'])
     
     trainer = ModelTrainer(
-        PROCESSED_DATA_DIR / config['data']['output_filename'],
+        PROCESSED_DATA_DIR / config['data']['processed_filename'],
         MODELS_DIR / config['model']['output_filename'],
+        MODELS_DIR / config['model']['le_filename'],
+        MODELS_DIR / config['model']['split_indices_filename'],
         model_type=config['model']['type']
     )
     trainer.run()

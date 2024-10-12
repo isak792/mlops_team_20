@@ -35,18 +35,61 @@ stages:
       hash: md5
       md5: a31a5b75d6d1523cc4cd2a394824fb37
       size: 819
-    - path: turkish_music_emotion/dataset.py
+    - path: turkish_music_emotion/modeling/train.py
       hash: md5
-      md5: f53de3d73dd587c2b79db30589865ab6
-      size: 4513
+      md5: 99bd1a3dab3f4a8cf7c02933cb0cc9e0
+      size: 5643
     params:
       params.yaml:
+        model.le_filename: label_encoder.joblib
         model.output_filename: model.joblib
         model.random_state: 1
+        model.split_indices_filename: split_indices.json
         model.test_size: 0.2
         model.type: rf
     outs:
+    - path: models/label_encoder.joblib
+      hash: md5
+      md5: 01d955b2611ea250869edf594daf4eb9
+      size: 564
     - path: models/model.joblib
       hash: md5
-      md5: 014b462953125ccc753ae9e42f279bc9
-      size: 1016905
+      md5: 3c590f9b2af2b94e673664022e800741
+      size: 1023817
+    - path: models/split_indices.json
+      hash: md5
+      md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
+      size: 1927
+  predict:
+    cmd: python3 run_pipeline.py --stage predict
+    deps:
+    - path: data/processed/Acoustic_Features_Processed.csv
+      hash: md5
+      md5: 673d9863794933f48d99d408cc6a8d9b
+      size: 396457
+    - path: models/label_encoder.joblib
+      hash: md5
+      md5: 01d955b2611ea250869edf594daf4eb9
+      size: 564
+    - path: models/model.joblib
+      hash: md5
+      md5: 3c590f9b2af2b94e673664022e800741
+      size: 1023817
+    - path: models/split_indices.json
+      hash: md5
+      md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
+      size: 1927
+    - path: turkish_music_emotion/config.py
+      hash: md5
+      md5: a31a5b75d6d1523cc4cd2a394824fb37
+      size: 819
+    - path: turkish_music_emotion/modeling/predict.py
+      hash: md5
+      md5: e893d9f221ed43df57564b0dfbdfc099
+      size: 2096
+    params:
+      params.yaml:
+        data.processed_filename: Acoustic_Features_Processed.csv
+        model.le_filename: label_encoder.joblib
+        model.output_filename: model.joblib
+        model.split_indices_filename: split_indices.json
