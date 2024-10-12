@@ -1,6 +1,6 @@
 stages:
   load_process_data:
-    cmd: python run_pipeline.py --stage load_process_data
+    cmd: python3 run_pipeline.py --stage load_process_data
     deps:
       - turkish_music_emotion/dataset.py
       - turkish_music_emotion/config.py
@@ -12,7 +12,7 @@ stages:
       - data.processed_filename
 
   train_model:
-    cmd: python run_pipeline.py --stage train_model
+    cmd: python3 run_pipeline.py --stage train_model
     deps:
       - turkish_music_emotion/dataset.py
       - turkish_music_emotion/config.py
