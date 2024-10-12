@@ -10,10 +10,6 @@ from turkish_music_emotion.config import RAW_DATA_DIR, PROCESSED_DATA_DIR, INTER
 class DataHandler:
     def __init__(self):
         self.data = None
-        self.X_train = None
-        self.X_test = None
-        self.y_train = None
-        self.y_test = None
         self.le = LabelEncoder()
 
 
@@ -40,6 +36,12 @@ class DataHandler:
         if self.data is None:
             logger.warning("No data loaded. Load data before processing.")
             return
+         # Initialize and use MissingValueAnalyzer
+        analyzer = MissingValueAnalyzer(self.data)
+        missing_columns = analyzer.get_missing_columns()
+        analyzer.display_missing_columns()
+        
+        # Continue with data processing
         self.data.dropna(inplace=True)
         logger.success("Data processed successfully.")
         return self.data
@@ -53,23 +55,13 @@ class DataHandler:
         self.data[numeric_cols] = scaler.fit_transform(self.data[numeric_cols])
         logger.success("Data scaled successfully.")
         return self.data
-    
-    def preprocess_data(self):
-        if self.data is None:
-            logger.warning("No data loaded. Load data before preprocessing.")
-            return
-        X = self.data.drop('Class', axis=1)
-        y = self.data['Class']
-        y_encoded = self.le.fit_transform(y)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
-        logger.success("Data preprocessed successfully.")
-        return self
 
     def run(self, input_path: Path, input_filename: str, output_filename: str):
         self.load_data(input_path, input_filename)
         self.process_data()
         self.scale_data()
         self.save_data(PROCESSED_DATA_DIR, output_filename)
+        return self
 
 
 
