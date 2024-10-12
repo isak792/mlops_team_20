@@ -43,7 +43,7 @@ stages:
       params.yaml:
         model.output_filename: model.joblib
         model.random_state: 1
-        model.test_size: 0.2
+        model.test_size: 0.15
     outs:
     - path: models/model.joblib
       hash: md5
