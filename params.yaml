@@ -1,0 +1,8 @@
+data:
+  raw_filename: "Acoustic Features.csv"
+  processed_filename: "Acoustic_Features_Processed.csv"
+
+model:
+  output_filename: "model.joblib"
+  test_size: 0.2
+  random_state: 1
