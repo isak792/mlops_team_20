@@ -48,3 +48,41 @@ class PlotHandler:
         
         if save:
             self.save_plot(filename)
+
+
+class ClassPlotter:
+    def __init__(self, df, column):
+        self.df = df
+        self.column = column
+        self.class_counts = None
+
+    def count_classes(self):
+        self.class_counts = self.df[self.column].value_counts()
+
+    def plot_classes(self):
+        if self.class_counts is None:
+            raise ValueError("You must count the classes before plotting.")
+        
+        plt.bar(self.class_counts.index, self.class_counts.values)
+        plt.title(f'Count of Each {self.column}')
+        plt.xlabel(self.column)
+        plt.ylabel('Count')
+        plt.show()
+
+class CorrelationHeatmap:
+    def __init__(self, data):
+        self.data = data
+        self.correlation_matrix = None
+
+    def calculate_correlation(self):
+        self.correlation_matrix = self.data.corr()
+    
+    def plot_heatmap(self, figsize=(16, 12), cmap='coolwarm', annot=False):
+        if self.correlation_matrix is None:
+            raise ValueError("You must calculate the correlation matrix before plotting.")
+        
+        plt.figure(figsize=figsize)
+        # Graficar el heatmap sin anotaciones y manteniendo las etiquetas
+        sns.heatmap(self.correlation_matrix, cmap=cmap, annot=annot, cbar=False, xticklabels=True, yticklabels=True)
+        plt.title('Correlation Heatmap')
+        plt.show()
