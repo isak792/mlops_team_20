@@ -43,9 +43,10 @@ stages:
       params.yaml:
         model.output_filename: model.joblib
         model.random_state: 1
-        model.test_size: 0.15
+        model.test_size: 0.2
+        model.type: rf
     outs:
     - path: models/model.joblib
       hash: md5
-      md5: fcee32ed1822ef3c59d562cf9e93364b
-      size: 132980
+      md5: 014b462953125ccc753ae9e42f279bc9
+      size: 1016905

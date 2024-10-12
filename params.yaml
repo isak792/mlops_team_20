@@ -4,6 +4,6 @@ data:
 
 model:
   output_filename: "model.joblib"
-  test_size: 0.15
+  test_size: 0.2
   random_state: 1
-  type: 'knn'
+  type: 'rf'

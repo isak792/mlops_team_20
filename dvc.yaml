@@ -23,3 +23,4 @@ stages:
       - model.output_filename
       - model.test_size
       - model.random_state
+      - model.type
