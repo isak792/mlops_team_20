@@ -71,6 +71,7 @@ class MissingValueAnalyzer:
             print("Columnas con valores faltantes:")
             print(columns_with_missing)
 
+
 class LabelEncoderWrapper:
     def __init__(self, data):
         """Inicializa el objeto con el DataFrame."""

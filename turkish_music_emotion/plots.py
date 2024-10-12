@@ -49,6 +49,7 @@ class PlotHandler:
         if save:
             self.save_plot(filename)
 
+
 class ClassPlotter:
     def __init__(self, df, column):
         self.df = df
