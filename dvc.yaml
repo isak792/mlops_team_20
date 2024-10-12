@@ -1,25 +1,25 @@
-# stages:
-#   load_process_data:
-#     cmd: python run_pipeline.py --stage load_process_data
-#     deps:
-#       - turkish_music_emotion/dataset.py
-#       - turkish_music_emotion/config.py
-#       - data/raw/${data.raw_filename}
-#     outs:
-#       - data/processed/${data.processed_filename}
-#     params:
-#       - data.raw_filename
-#       - data.processed_filename
+stages:
+  load_process_data:
+    cmd: python run_pipeline.py --stage load_process_data
+    deps:
+      - turkish_music_emotion/dataset.py
+      - turkish_music_emotion/config.py
+      - data/raw/${data.raw_filename}
+    outs:
+      - data/processed/${data.processed_filename}
+    params:
+      - data.raw_filename
+      - data.processed_filename
 
-#   train_model:
-#     cmd: python run_pipeline.py --stage train_model
-#     deps:
-#       - turkish_music_emotion/dataset.py
-#       - turkish_music_emotion/config.py
-#       - data/processed/${data.processed_filename}
-#     outs:
-#       - models/${model.output_filename}
-#     params:
-#       - model.output_filename
-#       - model.test_size
-#       - model.random_state
+  train_model:
+    cmd: python run_pipeline.py --stage train_model
+    deps:
+      - turkish_music_emotion/dataset.py
+      - turkish_music_emotion/config.py
+      - data/processed/${data.processed_filename}
+    outs:
+      - models/${model.output_filename}
+    params:
+      - model.output_filename
+      - model.test_size
+      - model.random_state
