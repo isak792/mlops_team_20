@@ -179,4 +179,5 @@ mlops_tme_venv/
 .dvc/tmp/
 .dvc.lock
 .dvc/config.local
+.dvc/config
 !*.dvc
