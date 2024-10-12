@@ -1,0 +1,51 @@
+schema: '2.0'
+stages:
+  load_process_data:
+    cmd: python run_pipeline.py --stage load_process_data
+    deps:
+    - path: data/raw/Acoustic Features.csv
+      hash: md5
+      md5: faaf0331df63821398fcf7fe59ce11b5
+      size: 172389
+    - path: turkish_music_emotion/config.py
+      hash: md5
+      md5: db02e94f7ce11f4cce82e9f00dd62475
+      size: 851
+    - path: turkish_music_emotion/dataset.py
+      hash: md5
+      md5: f648035b3448425da8c908f8bba30164
+      size: 3785
+    params:
+      params.yaml:
+        data.processed_filename: Acoustic_Features_Processed.csv
+        data.raw_filename: Acoustic Features.csv
+    outs:
+    - path: data/processed/Acoustic_Features_Processed.csv
+      hash: md5
+      md5: 83d919b2a4dc496782b833cdbc43e393
+      size: 128489
+  train_model:
+    cmd: python run_pipeline.py --stage train_model
+    deps:
+    - path: data/processed/Acoustic_Features_Processed.csv
+      hash: md5
+      md5: 83d919b2a4dc496782b833cdbc43e393
+      size: 128489
+    - path: turkish_music_emotion/config.py
+      hash: md5
+      md5: db02e94f7ce11f4cce82e9f00dd62475
+      size: 851
+    - path: turkish_music_emotion/dataset.py
+      hash: md5
+      md5: f648035b3448425da8c908f8bba30164
+      size: 3785
+    params:
+      params.yaml:
+        model.output_filename: model.joblib
+        model.random_state: 1
+        model.test_size: 0.2
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: fd29ebf1b943957c527640ac61aabb5a
+      size: 133172
