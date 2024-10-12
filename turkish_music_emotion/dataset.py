@@ -2,13 +2,20 @@ from pathlib import Path
 from loguru import logger
 import pandas as pd
 import yaml
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
 
 from turkish_music_emotion.config import RAW_DATA_DIR, PROCESSED_DATA_DIR, INTERIM_DATA_DIR
 
 class DataHandler:
     def __init__(self):
         self.data = None
+        self.X_train = None
+        self.X_test = None
+        self.y_train = None
+        self.y_test = None
+        self.le = LabelEncoder()
+
 
     def load_data(self, input_path: Path, input_filename: str):
         full_input_path = input_path / input_filename
@@ -36,10 +43,33 @@ class DataHandler:
         self.data.dropna(inplace=True)
         logger.success("Data processed successfully.")
         return self.data
+    
+    def scale_data(self):
+        if self.data is None:
+            logger.warning("No data loaded. Load data before scaling.")
+            return
+        scaler = StandardScaler()
+        numeric_cols = self.data.select_dtypes(include=['float64', 'int64']).columns
+        self.data[numeric_cols] = scaler.fit_transform(self.data[numeric_cols])
+        logger.success("Data scaled successfully.")
+        return self.data
+    
+    def preprocess_data(self):
+        if self.data is None:
+            logger.warning("No data loaded. Load data before preprocessing.")
+            return
+        X = self.data.drop('Class', axis=1)
+        y = self.data['Class']
+        y_encoded = self.le.fit_transform(y)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
+        logger.success("Data preprocessed successfully.")
+        return self
 
     def run(self, input_path: Path, input_filename: str, output_filename: str):
         self.load_data(input_path, input_filename)
         self.process_data()
+        self.scale_data()
+        self.preprocess_data()
         self.save_data(PROCESSED_DATA_DIR, output_filename)
 
 
