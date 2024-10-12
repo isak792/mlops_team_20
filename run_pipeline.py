@@ -40,7 +40,11 @@ def predict(params: dict):
 
 def main():
     parser = argparse.ArgumentParser(description="Run the music emotion pipeline")
-    parser.add_argument("--stage", choices=["load_process_data", "train_model", "predict"], required=True, help="Pipeline stage to run")
+    parser.add_argument("--stage", 
+                        choices=["load_process_data", "train_model", "predict"], 
+                        help="Pipeline stage to run",
+                        default="predict"  # Default stage when --stage is not provided
+                        )
     args = parser.parse_args()
 
     params = load_config()
