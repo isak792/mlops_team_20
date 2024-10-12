@@ -4,6 +4,7 @@ import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import yaml
 import logging
@@ -16,6 +17,7 @@ class ModelTrainer:
         self.model_output_path = model_output_path
         self.model = None
         self.metrics = {}
+        self.le = LabelEncoder()
 
     def load_data(self):
         logger.info(f"Loading data for training from {self.data_path}")
@@ -27,8 +29,9 @@ class ModelTrainer:
         data = self.load_data()
         X = data.drop(columns=['Class'])
         y = data['Class']
+        y_encoded = self.le.fit_transform(y)
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
+        X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=1)
         
         self.model = KNeighborsClassifier()
         self.model.fit(X_train, y_train)

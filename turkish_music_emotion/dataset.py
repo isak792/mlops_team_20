@@ -69,7 +69,6 @@ class DataHandler:
         self.load_data(input_path, input_filename)
         self.process_data()
         self.scale_data()
-        self.preprocess_data()
         self.save_data(PROCESSED_DATA_DIR, output_filename)
 
 
