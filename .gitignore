@@ -175,5 +175,8 @@ cython_debug/
 mlops_tme_venv/
 
 # DVC
-.dvc/config
-!data/*.dvc
+.dvc/cache/
+.dvc/tmp/
+.dvc.lock
+.dvc/config.local
+!*.dvc
