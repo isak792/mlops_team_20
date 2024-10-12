@@ -1,5 +1,5 @@
 # Data
-/data/
+/data/*
 
 # Mac OS-specific storage files
 .DS_Store
@@ -174,3 +174,14 @@ cython_debug/
 # venv
 mlops_tme_venv/
 /data
+
+.vscode/
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local
+.dvc/config
+!*.dvc
+!/data/
+!/data/**/*.dvc
