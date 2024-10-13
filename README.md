@@ -68,51 +68,51 @@ Este comando instalará pre-commit y configurará los hooks necesarios.
 
 ```
 ├── LICENSE
-├── Makefile           <- Makefile con comandos como `make data` o `make train`
-├── README.md          <- El README de nivel superior para desarrolladores que usan este proyecto.
+├── Makefile                <- Makefile con comandos como `make data` o `make train`
+├── README.md               <- El README de nivel superior para desarrolladores que usan este proyecto.
 ├── data
-│   ├── external       <- Datos de fuentes de terceros.
-│   ├── interim        <- Datos intermedios que han sido transformados.
-│   ├── processed      <- Los conjuntos de datos finales, canónicos para modelado.
-│   └── raw            <- El volcado de datos original e inmutable.
+│   ├── external            <- Datos de fuentes de terceros.
+│   ├── interim             <- Datos intermedios que han sido transformados.
+│   ├── processed           <- Los conjuntos de datos finales, canónicos para modelado.
+│   └── raw                 <- El volcado de datos original e inmutable.
 │
-├── docs               <- Un proyecto mkdocs por defecto; ver www.mkdocs.org para detalles
+├── docs                    <- Un proyecto mkdocs por defecto; ver www.mkdocs.org para detalles
 │
-├── models             <- Modelos entrenados y serializados, predicciones de modelos o resúmenes de modelos
+├── models                  <- Modelos entrenados y serializados, predicciones de modelos o resúmenes de modelos
 │
-├── notebooks          <- Jupyter notebooks. La convención de nomenclatura es un número (para ordenar),
+├── notebooks               <- Jupyter notebooks. La convención de nomenclatura es un número (para ordenar),
 │                         las iniciales del creador y una breve descripción delimitada por `-`, p.ej.
 │                         `1.0-jqp-exploracion-inicial-de-datos`.
 │
-├── references         <- Diccionarios de datos, manuales y todos los demás materiales explicativos.
+├── references              <- Diccionarios de datos, manuales y todos los demás materiales explicativos.
 │
-├── reports            <- Análisis generado como HTML, PDF, LaTeX, etc.
-│   └── figures        <- Gráficos y figuras generadas para ser usadas en informes
+├── reports                 <- Análisis generado como HTML, PDF, LaTeX, etc.
+│   └── figures             <- Gráficos y figuras generadas para ser usadas en informes
 │
-├── requirements.txt   <- El archivo de requisitos para reproducir el entorno de análisis,
+├── requirements.txt        <- El archivo de requisitos para reproducir el entorno de análisis,
 │                         generado con `pip freeze > requirements.txt`
 │
-├── setup.cfg          <- Archivo de configuración para flake8
-├── pyproject.toml     <- Archivo de configuración del proyecto
+├── setup.cfg               <- Archivo de configuración para flake8
+├── pyproject.toml          <- Archivo de configuración del proyecto
 │
 ├── .pre-commit-config.yaml <- Configuración para pre-commit hooks
 │
-│── mlops              <- Código fuente para uso en este proyecto.
-│   ├── __init__.py    <- Hace que mlops sea un módulo Python
-│   ├── config.py      <- Almacena variables útiles y configuración
-│   ├── dataset.py     <- Scripts para descargar o generar datos
-│   ├── features.py    <- Código para crear características para modelado
+│── turkish_music_emotion   <- Código fuente para uso en este proyecto.
+│   ├── __init__.py         <- Hace que mlops sea un módulo Python
+│   ├── config.py           <- Almacena variables útiles y configuración
+│   ├── dataset.py          <- Scripts para descargar o generar datos
+│   ├── features.py         <- Código para crear características para modelado
 │   ├── modeling
 │   │   ├── __init__.py
-│   │   ├── predict.py <- Código para ejecutar inferencia de modelos con modelos entrenados
-│   │   └── train.py   <- Código para entrenar modelos
-│   └── plots.py       <- Código para crear visualizaciones
+│   │   ├── predict.py      <- Código para ejecutar inferencia de modelos con modelos entrenados
+│   │   └── train.py        <- Código para entrenar modelos
+│   └── plots.py            <- Código para crear visualizaciones
 │
-│── dvc.yaml           <- Configuración del Pipeline DVC
+│── dvc.yaml                <- Configuración del Pipeline DVC
 │
-│── params.yaml        <- Parámetros utilizados por el pipeline 
+│── params.yaml             <- Parámetros utilizados por el pipeline 
 │
-└── run_pipeline.py    <- Archivo que define los pasos a seguir por el pipeline 
+└── run_pipeline.py         <- Archivo que define los pasos a seguir por el pipeline 
 ```
 
 ## Calidad del Código
