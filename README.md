@@ -75,6 +75,12 @@ Este comando instalará pre-commit y configurará los hooks necesarios.
 │   ├── interim             <- Datos intermedios que han sido transformados.
 │   ├── processed           <- Los conjuntos de datos finales, canónicos para modelado.
 │   └── raw                 <- El volcado de datos original e inmutable.
+|
+├── docker
+│   ├── minio               <- Scripts para inizializar MinIO
+│   ├── mlflow              <- Dockerfile de MLFlow
+│   ├── postgres            <- Dockerfile de PostgreSQL
+│   └── docker-compose.yaml <- Archivo para levantar ambiente de Docker  
 │
 ├── docs                    <- Un proyecto mkdocs por defecto; ver www.mkdocs.org para detalles
 │
