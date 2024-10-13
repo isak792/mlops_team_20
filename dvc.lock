@@ -1,7 +1,7 @@
 schema: '2.0'
 stages:
   load_process_data:
-    cmd: python run_pipeline.py --stage load_process_data
+    cmd: python3 run_pipeline.py --stage load_process_data
     deps:
     - path: data/raw/Acoustic Features.csv
       hash: md5
@@ -25,7 +25,7 @@ stages:
       md5: df1340959a5576f53cdcfe532985fa96
       size: 396858
   train_model:
-    cmd: python run_pipeline.py --stage train_model
+    cmd: python3 run_pipeline.py --stage train_model
     deps:
     - path: data/processed/Acoustic_Features_Processed.csv
       hash: md5
@@ -50,18 +50,18 @@ stages:
     outs:
     - path: models/label_encoder.joblib
       hash: md5
-      md5: 01d955b2611ea250869edf594daf4eb9
-      size: 564
+      md5: 2f620f69158b0feb160885f725f9750e
+      size: 558
     - path: models/model.joblib
       hash: md5
-      md5: 2f348779488d85498f4d1121979e2e20
-      size: 1008633
+      md5: 4fb96ff9b33b3599ba5ffed8665d3576
+      size: 1004169
     - path: models/split_indices.json
       hash: md5
       md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
       size: 1927
   predict:
-    cmd: python run_pipeline.py --stage predict
+    cmd: python3 run_pipeline.py --stage predict
     deps:
     - path: data/processed/Acoustic_Features_Processed.csv
       hash: md5
@@ -69,12 +69,12 @@ stages:
       size: 396858
     - path: models/label_encoder.joblib
       hash: md5
-      md5: 01d955b2611ea250869edf594daf4eb9
-      size: 564
+      md5: 2f620f69158b0feb160885f725f9750e
+      size: 558
     - path: models/model.joblib
       hash: md5
-      md5: 2f348779488d85498f4d1121979e2e20
-      size: 1008633
+      md5: 4fb96ff9b33b3599ba5ffed8665d3576
+      size: 1004169
     - path: models/split_indices.json
       hash: md5
       md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
