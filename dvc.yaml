@@ -1,6 +1,6 @@
 stages:
   load_process_data:
-    cmd: python run_pipeline.py --stage load_process_data
+    cmd: python3 run_pipeline.py --stage load_process_data
     deps:
       - turkish_music_emotion/dataset.py
       - turkish_music_emotion/config.py
@@ -12,14 +12,34 @@ stages:
       - data.processed_filename
 
   train_model:
-    cmd: python run_pipeline.py --stage train_model
+    cmd: python3 run_pipeline.py --stage train_model
     deps:
-      - turkish_music_emotion/dataset.py
+      - turkish_music_emotion/modeling/train.py
       - turkish_music_emotion/config.py
       - data/processed/${data.processed_filename}
     outs:
       - models/${model.output_filename}
+      - models/${model.le_filename}
+      - models/${model.split_indices_filename}
     params:
       - model.output_filename
+      - model.le_filename
+      - model.split_indices_filename
       - model.test_size
       - model.random_state
+      - model.type
+
+  predict:
+    cmd: python3 run_pipeline.py --stage predict
+    deps:
+      - turkish_music_emotion/modeling/predict.py
+      - turkish_music_emotion/config.py
+      - models/${model.output_filename}
+      - models/${model.le_filename}
+      - models/${model.split_indices_filename}
+      - data/processed/${data.processed_filename}
+    params:
+      - model.output_filename
+      - model.le_filename
+      - model.split_indices_filename
+      - data.processed_filename
