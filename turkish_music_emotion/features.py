@@ -135,6 +135,7 @@ class PCAVisualizer:
         self.n_components = n_components
         self.X = df.drop(target_column, axis=1)
         self.y = df[target_column]
+        self.pca_model = None
         self.X_scaled = None
         self.X_pca = None
         self.pca_df = None
@@ -144,8 +145,8 @@ class PCAVisualizer:
         self.X_scaled = scaler.fit_transform(self.X)
 
     def apply_pca(self):
-        pca = PCA(n_components=self.n_components)
-        self.X_pca = pca.fit_transform(self.X_scaled)
+        self.pca_model = PCA(n_components=self.n_components)
+        self.X_pca = self.pca_model.fit_transform(self.X_scaled)
         self.pca_df = pd.DataFrame(data=self.X_pca, columns=[f'PC{i+1}' for i in range(self.n_components)])
         self.pca_df[self.target_column] = self.y
 
