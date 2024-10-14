@@ -48,3 +48,65 @@ class PlotHandler:
         
         if save:
             self.save_plot(filename)
+            
+class ClassPlotter:
+    def __init__(self, df, column):
+        self.df = df
+        self.column = column
+        self.class_counts = None
+
+    def count_classes(self):
+        self.class_counts = self.df[self.column].value_counts()
+
+    def plot_classes(self):
+        if self.class_counts is None:
+            raise ValueError("You must count the classes before plotting.")
+        
+        plt.bar(self.class_counts.index, self.class_counts.values)
+        plt.title(f'Count of Each {self.column}')
+        plt.xlabel(self.column)
+        plt.ylabel('Count')
+        plt.show()
+
+class CorrelationHeatmap:
+    def __init__(self, data):
+        self.data = data
+        self.correlation_matrix = None
+
+    def calculate_correlation(self):
+        self.correlation_matrix = self.data.corr()
+    
+    def plot_heatmap(self, figsize=(16, 12), cmap='coolwarm', annot=False):
+        if self.correlation_matrix is None:
+            raise ValueError("You must calculate the correlation matrix before plotting.")
+        
+        plt.figure(figsize=figsize)
+        # Graficar el heatmap sin anotaciones y manteniendo las etiquetas
+        sns.heatmap(self.correlation_matrix, cmap=cmap, annot=annot, cbar=False, xticklabels=True, yticklabels=True)
+        plt.title('Correlation Heatmap')
+        plt.show()
+
+class BoxPlotGenerator:
+    def __init__(self, df, target_column, n_cols=4):
+        self.df = df
+        self.target_column = target_column
+        self.features = df.columns.drop(target_column)
+        self.n_cols = n_cols
+        self.n_features = len(self.features)
+        self.n_rows = (self.n_features - 1) // self.n_cols + 1
+
+    def create_plots(self):
+        fig, axes = plt.subplots(self.n_rows, self.n_cols, figsize=(20, 5 * self.n_rows))
+        axes = axes.flatten()
+
+        for i, feature in enumerate(self.features):
+            sns.boxplot(x=self.target_column, y=feature, data=self.df, ax=axes[i])
+            axes[i].set_title(feature)
+            axes[i].tick_params(axis='x', rotation=45)
+
+        for j in range(i + 1, len(axes)):
+            axes[j].set_visible(False)
+
+        plt.tight_layout()
+        plt.show()
+
