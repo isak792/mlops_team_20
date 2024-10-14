@@ -163,5 +163,5 @@ class PCAVisualizer:
         self.scale_features()
         self.apply_pca()
         self.plot_pca()
-        self.print_explained_variance()
+        # self.print_explained_variance()
     
