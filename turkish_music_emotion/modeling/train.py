@@ -1,12 +1,10 @@
-import json
-import logging
-from pathlib import Path
-from typing import Dict, Any, Tuple
-
 import joblib
 import pandas as pd
 import numpy as np
+import json
 import yaml
+import mlflow
+import mlflow.sklearn
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -14,6 +12,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.preprocessing import LabelEncoder
+import logging
+from pathlib import Path
+from typing import Dict, Any, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,9 @@ class ModelTrainer:
         self.model = None
         self.metrics = {}
         self.le = LabelEncoder()
+
+        mlflow.set_tracking_uri("http://24.144.69.175:5000")
+        mlflow.set_experiment(f"/dvc_pipe/test")
 
     def load_data(self) -> pd.DataFrame:
         """Load data from a CSV file."""
@@ -47,11 +51,11 @@ class ModelTrainer:
         """Split the data into training and testing sets."""
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
         
-        # Save split indices
         split_indices = {
             'train_indices': X_train.index.tolist(),
             'test_indices': X_test.index.tolist()
         }
+
         with open(self.split_indices_path, 'w') as f:
             json.dump(split_indices, f)
         
@@ -72,7 +76,19 @@ class ModelTrainer:
     def train_model(self, X_train: pd.DataFrame, y_train: np.ndarray) -> None:
         """Train the model using the specified algorithm."""
         self.model = self.create_model()
-        self.model.fit(X_train, y_train)
+
+        with mlflow.start_run() as run:
+            mlflow.log_param("model_type", self.model_type)
+
+            if self.model_type == 'rf':
+                mlflow.log_param("n_estimators", self.model.n_estimators)
+                mlflow.log_param("max_depth", self.model.max_depth)
+
+            self.model.fit(X_train, y_train)
+            logger.info(f"Model trained successfully.")
+
+            mlflow.sklearn.log_model(self.model, "model")
+            logger.info(f"Model logged to MLflow with Run ID: {run.info.run_id}")
 
     def evaluate_model(self, X_test: pd.DataFrame, y_test: np.ndarray) -> None:
         """Evaluate the model and store performance metrics."""
@@ -84,6 +100,14 @@ class ModelTrainer:
             'f1_score': f1_score(y_test, predictions, average='weighted'),
             'confusion_matrix': confusion_matrix(y_test, predictions).tolist()
         }
+        
+        with mlflow.start_run() as run:
+            mlflow.log_metric("accuracy", self.metrics['accuracy'])
+            mlflow.log_metric("precision", self.metrics['precision'])
+            mlflow.log_metric("recall", self.metrics['recall'])
+            mlflow.log_metric("f1_score", self.metrics['f1_score'])
+            logger.info(f"Metrics logged to MLflow with Run ID: {run.info.run_id}")
+
         logger.info(f"Model evaluated successfully with metrics: {self.metrics}")
 
     def save_metrics(self) -> None:
