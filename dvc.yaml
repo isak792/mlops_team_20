@@ -28,6 +28,12 @@ stages:
       - model.test_size
       - model.random_state
       - model.type
+      - model.hyperparameters.rf.n_estimators
+      - model.hyperparameters.rf.max_depth
+      - model.hyperparameters.svm.C
+      - model.hyperparameters.svm.kernel
+      - model.hyperparameters.svm.gamma
+      - model.hyperparameters.knn.n_neighbors
 
   predict:
     cmd: python run_pipeline.py --stage predict
