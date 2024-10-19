@@ -80,14 +80,23 @@ class ModelTrainer:
 
         mlflow.log_param("model_type", self.model_type)
         if self.model_type == 'rf':
-            mlflow.log_param("n_estimators", self.hyperparameters.get('n_estimators', 100))
-            mlflow.log_param("max_depth", self.hyperparameters.get('max_depth', None))
+           #mlflow.log_param("n_estimators", self.hyperparameters.get('n_estimators', 100))
+           # mlflow.log_param("max_depth", self.hyperparameters.get('max_depth', 5))
+           rf_params = self.hyperparameters.get('rf', {})
+           for param, value in rf_params.items():
+             mlflow.log_param(param, value)
         elif self.model_type == 'svm':
-            mlflow.log_param("C", self.hyperparameters.get('C', 1.0))
-            mlflow.log_param("kernel", self.hyperparameters.get('kernel', 'rbf'))
-            mlflow.log_param("gamma", self.hyperparameters.get('gamma', 'scale'))
+            #mlflow.log_param("C", self.hyperparameters.get('C', 1.0))
+            #mlflow.log_param("kernel", self.hyperparameters.get('kernel', 'rbf'))
+            #mlflow.log_param("gamma", self.hyperparameters.get('gamma', 'scale'))
+            svm_params = self.hyperparameters.get('svm', {})
+            for param, value in svm_params.items():
+              mlflow.log_param(param, value)
         elif self.model_type == 'knn':
-            mlflow.log_param("n_neighbors", self.hyperparameters.get('n_neighbors', 5))
+            #mlflow.log_param("n_neighbors", self.hyperparameters.get('n_neighbors', 5))
+            knn_params = self.hyperparameters.get('knn', {})
+            for param, value in knn_params.items():
+             mlflow.log_param(param, value)
 
         self.model.fit(X_train, y_train)
         logger.info(f"Model trained successfully.")
