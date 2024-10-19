@@ -1,49 +1,43 @@
-# Instrucciones para Generar el Ambiente
-
-## Creación de ambiente virtual de python (venv)
-Primero, se requiere una instalación de Python 3.10. Favor dirigirse a la página oficial para obtener instrucciones de instalación:
-`https://www.python.org/downloads/release/python-3100/`
-
-Posteriormente, se debe correr el siguiente código desde una terminal:
-
-```bash
-python3.10 -m venv mlops_tme_venv
-```
-
-Para dispositivos Windows, el código para activar el ambiente es el siguiente:
-```bash
-mlops_tme_venv\Scripts\activate
-```
-
-En cambio, este es el código para MacOS y Linux:
-```bash
-source mlops_tme_venv/bin/activate
-```
-
-Finalmente, este código permite instalar las dependencias de python:
-```bash
-pip install -r requirements.txt
-```
-
+# Instrucciones para Configuración de Docker y DVC
 
 ## Levantamiento de Contenedores de Docker
 
-Para levantar los contenedores de docker, basta simplemente con navegar a la carpeta de `/docker`.
+Se utilizaron contenedores de Docker en una máquina virtual en la nube, asegurando que todos los compañeros tengan acceso a los servicios requeridos.
+
+Los servicios que se levantaron fue un servidor de MinIO para simular buckets de S3, y un servidor de MLFlow. Se configuró MinIO para actuar como un 'Artifact Store' para MLFlow, además de usarse como un object storage donde se guardarán todos los archivos del equipo.
+
+Para levantar los contenedores de Docker, se utilizaron los siguientes comandos:
 ```bash
 cd docker
-```
-Y luego correr el siguiente comando:
-```bash
 docker-compose up --build -d
 ```
-*Nota*: Esto asume que ya se cuenta con el archivo `.env` en la carpeta de `/docker`.
+*Nota*: Esto asume que ya se cuenta con el archivo `.env` en la carpeta de `/docker`. Este no se incluye en el repositorio por motivos de seguridad.
 
 
 ## Configuración de DVC
 
-DVC ya se encuentra configurado para manejar las versiones de los archivos dentro de la carpeta `data`. Sin embargo, es importante ejecutar este comando cada vez que se haga
-un cambio a algún archivo de la carpeta, utilizando este comando:
+Se utilizaron los siguientes comandos para inicializar el ambiente DVC:
 
 ```bash
-dvc add data
+dvc init
+dvc remote add -d minio-remote s3://data
+dvc remote modify minio-remote endpointurl http://24.144.69.175:9000
+dvc remote modify minio-remote access_key_id [access-key-id]
+dvc remote modify minio-remote secret_access_key [secret-access-key]
 ```
+
+DVC se configuró para manejar las versiones de los archivos dentro de la carpeta `data/raw`. 
+
+```bash
+dvc add data/raw
+```
+
+Además, el pipeline de DVC genera datos que automáticamente se suben a la carpeta `data/processed`, que también es manejada por DVC.
+
+Para correr el pipeline, se debe usar este comando:
+
+```bash
+dvc repro
+```
+
+Los parámetros del pipeline pueden ser modificados en el archivo `params.yaml`
