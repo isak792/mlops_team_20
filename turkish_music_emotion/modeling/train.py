@@ -19,19 +19,20 @@ from typing import Dict, Any, Tuple
 logger = logging.getLogger(__name__)
 
 class ModelTrainer:
-    def __init__(self, data_path: Path, model_output_path: Path, le_output_path: Path, split_indices_path: Path, model_type: str = 'knn'):
+    def __init__(self, data_path: Path, model_output_path: Path, le_output_path: Path, split_indices_path: Path, model_type: str = 'knn', hyperparameters: dict = None):
         self.data_path = data_path
         self.model_output_path = model_output_path
         self.le_output_path = le_output_path
         self.split_indices_path = split_indices_path
         self.metrics_output_path = model_output_path.parent / 'metrics.json'
         self.model_type = model_type
+        self.hyperparameters = hyperparameters or {}
         self.model = None
         self.metrics = {}
         self.le = LabelEncoder()
 
         mlflow.set_tracking_uri("http://24.144.69.175:5000")
-        mlflow.set_experiment(f"/dvc_pipe/test")
+        mlflow.set_experiment(f"/dvc_pipe/testing")
 
     def load_data(self) -> pd.DataFrame:
         """Load data from a CSV file."""
@@ -65,11 +66,11 @@ class ModelTrainer:
     def create_model(self) -> BaseEstimator:
         """Create and return the specified model."""
         if self.model_type == 'knn':
-            return KNeighborsClassifier()
+            return KNeighborsClassifier(**self.hyperparameters.get('knn', {}))
         elif self.model_type == 'rf':
-            return RandomForestClassifier()
+            return RandomForestClassifier(**self.hyperparameters.get('rf', {}))
         elif self.model_type == 'svm':
-            return SVC()
+            return SVC(**self.hyperparameters.get('svm', {}))
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
 
@@ -77,37 +78,42 @@ class ModelTrainer:
         """Train the model using the specified algorithm."""
         self.model = self.create_model()
 
-        with mlflow.start_run() as run:
-            mlflow.log_param("model_type", self.model_type)
+        mlflow.log_param("model_type", self.model_type)
+        if self.model_type == 'rf':
+            mlflow.log_param("n_estimators", self.hyperparameters.get('n_estimators', 100))
+            mlflow.log_param("max_depth", self.hyperparameters.get('max_depth', None))
+        elif self.model_type == 'svm':
+            mlflow.log_param("C", self.hyperparameters.get('C', 1.0))
+            mlflow.log_param("kernel", self.hyperparameters.get('kernel', 'rbf'))
+            mlflow.log_param("gamma", self.hyperparameters.get('gamma', 'scale'))
+        elif self.model_type == 'knn':
+            mlflow.log_param("n_neighbors", self.hyperparameters.get('n_neighbors', 5))
 
-            if self.model_type == 'rf':
-                mlflow.log_param("n_estimators", self.model.n_estimators)
-                mlflow.log_param("max_depth", self.model.max_depth)
+        self.model.fit(X_train, y_train)
+        logger.info(f"Model trained successfully.")
 
-            self.model.fit(X_train, y_train)
-            logger.info(f"Model trained successfully.")
-
-            mlflow.sklearn.log_model(self.model, "model")
-            logger.info(f"Model logged to MLflow with Run ID: {run.info.run_id}")
+        mlflow.sklearn.log_model(self.model, "model")
+        logger.info("Model logged to MLflow.")
 
     def evaluate_model(self, X_test: pd.DataFrame, y_test: np.ndarray) -> None:
-        """Evaluate the model and store performance metrics."""
+        """Evaluate the model and store performance metrics including confusion matrix."""
         predictions = self.model.predict(X_test)
+        
         self.metrics = {
             'accuracy': accuracy_score(y_test, predictions),
-            'precision': precision_score(y_test, predictions, average='weighted'),
-            'recall': recall_score(y_test, predictions, average='weighted'),
-            'f1_score': f1_score(y_test, predictions, average='weighted'),
-            'confusion_matrix': confusion_matrix(y_test, predictions).tolist()
+            'precision': precision_score(y_test, predictions, average='weighted', zero_division=0),
+            'recall': recall_score(y_test, predictions, average='weighted', zero_division=0),
+            'f1_score': f1_score(y_test, predictions, average='weighted', zero_division=0)
         }
         
-        with mlflow.start_run() as run:
-            mlflow.log_metric("accuracy", self.metrics['accuracy'])
-            mlflow.log_metric("precision", self.metrics['precision'])
-            mlflow.log_metric("recall", self.metrics['recall'])
-            mlflow.log_metric("f1_score", self.metrics['f1_score'])
-            logger.info(f"Metrics logged to MLflow with Run ID: {run.info.run_id}")
-
+        cm = confusion_matrix(y_test, predictions)
+        mlflow.log_metrics(self.metrics)
+        cm_dict = {
+            'confusion_matrix': cm.tolist()
+        }
+        mlflow.log_dict(cm_dict, "confusion_matrix.json")
+        
+        logger.info("Metrics and confusion matrix logged to MLflow.")
         logger.info(f"Model evaluated successfully with metrics: {self.metrics}")
 
     def save_metrics(self) -> None:
@@ -128,16 +134,17 @@ class ModelTrainer:
 
     def run(self) -> None:
         """Run the entire model training pipeline."""
-        data = self.load_data()
-        X, y_encoded = self.preprocess_data(data)
-        X_train, X_test, y_train, y_test = self.split_data(X, y_encoded)
-        
-        self.train_model(X_train, y_train)
-        self.evaluate_model(X_test, y_test)
-        
-        self.save_metrics()
-        self.save_model()
-        self.save_label_encoder()
+        with mlflow.start_run():
+            data = self.load_data()
+            X, y_encoded = self.preprocess_data(data)
+            X_train, X_test, y_train, y_test = self.split_data(X, y_encoded)
+
+            self.train_model(X_train, y_train)
+            self.evaluate_model(X_test, y_test)
+            
+            self.save_metrics()
+            self.save_model()
+            self.save_label_encoder()
 
 def load_config(config_path: Path) -> Dict[str, Any]:
     """Load configuration from a YAML file."""
