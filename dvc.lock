@@ -37,14 +37,14 @@ stages:
       size: 851
     - path: turkish_music_emotion/modeling/train.py
       hash: md5
-      md5: a8b9837b4ef27b1f5cc16d2563534154
-      size: 7809
+      md5: 068aff2f2cd9714ca192d2dd3b1a37c7
+      size: 7384
     params:
       params.yaml:
         model.hyperparameters.knn.n_neighbors: 5
-        model.hyperparameters.rf.max_depth: 6
-        model.hyperparameters.rf.n_estimators: 25
-        model.hyperparameters.svm.C: 0.9
+        model.hyperparameters.rf.max_depth: 5
+        model.hyperparameters.rf.n_estimators: 50
+        model.hyperparameters.svm.C: 0.5
         model.hyperparameters.svm.gamma: scale
         model.hyperparameters.svm.kernel: rbf
         model.le_filename: label_encoder.joblib
@@ -52,7 +52,7 @@ stages:
         model.random_state: 1
         model.split_indices_filename: split_indices.json
         model.test_size: 0.2
-        model.type: rf
+        model.type: svm
     outs:
     - path: models/label_encoder.joblib
       hash: md5
@@ -60,8 +60,8 @@ stages:
       size: 565
     - path: models/model.joblib
       hash: md5
-      md5: 66e4cf86935cb603842f8de9141ecfbb
-      size: 168089
+      md5: 9a08653e44a6b41c3226ee8ec6f3c0dc
+      size: 136767
     - path: models/split_indices.json
       hash: md5
       md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
@@ -79,8 +79,8 @@ stages:
       size: 565
     - path: models/model.joblib
       hash: md5
-      md5: 66e4cf86935cb603842f8de9141ecfbb
-      size: 168089
+      md5: 9a08653e44a6b41c3226ee8ec6f3c0dc
+      size: 136767
     - path: models/split_indices.json
       hash: md5
       md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
