@@ -42,9 +42,9 @@ stages:
     params:
       params.yaml:
         model.hyperparameters.knn.n_neighbors: 5
-        model.hyperparameters.rf.max_depth: 6
-        model.hyperparameters.rf.n_estimators: 25
-        model.hyperparameters.svm.C: 0.9
+        model.hyperparameters.rf.max_depth: 5
+        model.hyperparameters.rf.n_estimators: 50
+        model.hyperparameters.svm.C: 1.0
         model.hyperparameters.svm.gamma: scale
         model.hyperparameters.svm.kernel: rbf
         model.le_filename: label_encoder.joblib
@@ -56,12 +56,12 @@ stages:
     outs:
     - path: models/label_encoder.joblib
       hash: md5
-      md5: b92f862cd8059d77dcdaeeae2529f69b
-      size: 565
+      md5: 01d955b2611ea250869edf594daf4eb9
+      size: 564
     - path: models/model.joblib
       hash: md5
-      md5: 66e4cf86935cb603842f8de9141ecfbb
-      size: 168089
+      md5: 28f818feeef364c8aaa63fb379935d91
+      size: 230057
     - path: models/split_indices.json
       hash: md5
       md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
@@ -75,12 +75,12 @@ stages:
       size: 396858
     - path: models/label_encoder.joblib
       hash: md5
-      md5: b92f862cd8059d77dcdaeeae2529f69b
-      size: 565
+      md5: 01d955b2611ea250869edf594daf4eb9
+      size: 564
     - path: models/model.joblib
       hash: md5
-      md5: 66e4cf86935cb603842f8de9141ecfbb
-      size: 168089
+      md5: 28f818feeef364c8aaa63fb379935d91
+      size: 230057
     - path: models/split_indices.json
       hash: md5
       md5: 8df48f40e9f95a3ef3eb5b018ca40ea5
