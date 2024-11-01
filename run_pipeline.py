@@ -24,7 +24,8 @@ def train_model(params: dict):
         MODELS_DIR / params['model']['output_filename'],
         MODELS_DIR / params['model']['le_filename'],
         MODELS_DIR / params['model']['split_indices_filename'],
-        model_type=params['model']['type']
+        model_type=params['model']['type'],
+        hyperparameters=params['model']['hyperparameters']
     )
     trainer.run()
 

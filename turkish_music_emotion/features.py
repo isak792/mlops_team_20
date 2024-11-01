@@ -5,6 +5,8 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import PowerTransformer
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 class DataPreprocessor:
     def __init__(self, data_dir):
@@ -102,3 +104,64 @@ class DataPreprocessor:
 
         print("\nFeatures with remaining high kurtosis (>7):")
         print(kurtosis[kurtosis > 7])
+
+class DataFrameAnalyzer:
+    def __init__(self, df):
+        self.df = df  
+    
+    def print_info(self):
+        print("DataFrame Information:")
+        self.df.info()  
+    
+    def print_class_distribution(self, class_column):
+        if class_column in self.df.columns:
+            print("\nClass distribution:")
+            print(self.df[class_column].value_counts())  
+        else:
+            print(f"Error: La columna '{class_column}' no existe en el DataFrame.")
+
+class DataStatistics:
+    def __init__(self, df):
+        self.df = df
+    
+    def print_summary_statistics(self):
+        print("\nSummary statistics:")
+        print(self.df.describe())  
+
+class PCAVisualizer:
+    def __init__(self, df, target_column, n_components=2):
+        self.df = df
+        self.target_column = target_column
+        self.n_components = n_components
+        self.X = df.drop(target_column, axis=1)
+        self.y = df[target_column]
+        self.pca_model = None
+        self.X_scaled = None
+        self.X_pca = None
+        self.pca_df = None
+
+    def scale_features(self):
+        scaler = StandardScaler()
+        self.X_scaled = scaler.fit_transform(self.X)
+
+    def apply_pca(self):
+        self.pca_model = PCA(n_components=self.n_components)
+        self.X_pca = self.pca_model.fit_transform(self.X_scaled)
+        self.pca_df = pd.DataFrame(data=self.X_pca, columns=[f'PC{i+1}' for i in range(self.n_components)])
+        self.pca_df[self.target_column] = self.y
+
+    def plot_pca(self):
+        plt.figure(figsize=(10, 8))
+        sns.scatterplot(x='PC1', y='PC2', hue=self.target_column, data=self.pca_df)
+        plt.title(f'PCA of {self.target_column} Features')
+        plt.show()
+
+    def print_explained_variance(self):
+        print("\nExplained variance ratio:")
+        print(self.pca_model.explained_variance_ratio_)
+
+    def run(self):
+        self.scale_features()
+        self.apply_pca()
+        self.plot_pca()
+        self.print_explained_variance()
