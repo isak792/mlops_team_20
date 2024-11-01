@@ -1,0 +1,52 @@
+site_name: Turkish Music Emotion ML Project
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append(".")
+          selection:
+            docstring_style: google
+
+nav:
+  - Home: 'index.md'
+  - Getting Started:
+    - 'Installation': 'getting-started/installation.md'
+    - 'Project Setup': 'getting-started/project-setup.md'
+  - Data:
+    - 'Data Overview': 'data/overview.md'
+    - 'Data Pipeline': 'data/pipeline.md'
+    - 'Data Versioning': 'data/versioning.md'
+  - Model:
+    - 'Model Architecture': 'model/architecture.md'
+    - 'Training Pipeline': 'model/training.md'
+    - 'Model Versioning': 'model/versioning.md'
+    - 'Experiment Tracking': 'model/experiments.md'
+  - MLOps:
+    - 'Pipeline Automation': 'mlops/automation.md'
+    - 'Reproducibility Guide': 'mlops/reproducibility.md'
+    - 'Environment Setup': 'mlops/environment.md'
+  - API Reference:
+    - 'Pipeline': 'api/pipeline.md'
+    - 'Models': 'api/models.md'
+    - 'Utils': 'api/utils.md'
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.arithmatex
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
