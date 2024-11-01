@@ -1,4 +1,4 @@
-site_name: Turkish Music Emotion ML Project
+site_name: Proyecto ML de Emociones en Música Turca
 theme:
   name: material
   features:
@@ -6,7 +6,6 @@ theme:
     - navigation.sections
     - navigation.expand
     - search.highlight
-
 plugins:
   - search
   - mkdocstrings:
@@ -17,30 +16,40 @@ plugins:
             - sys.path.append(".")
           selection:
             docstring_style: google
-
 nav:
-  - Home: 'index.md'
-  - Getting Started:
-    - 'Installation': 'getting-started/installation.md'
-    - 'Project Setup': 'getting-started/project-setup.md'
-  - Data:
-    - 'Data Overview': 'data/overview.md'
-    - 'Data Pipeline': 'data/pipeline.md'
-    - 'Data Versioning': 'data/versioning.md'
-  - Model:
-    - 'Model Architecture': 'model/architecture.md'
-    - 'Training Pipeline': 'model/training.md'
-    - 'Model Versioning': 'model/versioning.md'
-    - 'Experiment Tracking': 'model/experiments.md'
+  - Inicio: "index.md"
+  - Pendientes: "guia.md"
+  - Primeros Pasos:
+      - "Instalación": "getting-started/installation.md"
+      - "Configuración del Proyecto": "getting-started/project-setup.md"
+  - Datos:
+      - "Descripción General de Datos": "data/overview.md"
+      - "Pipeline de Datos": "data/pipeline.md"
+      - "Versionado de Datos": "data/versioning.md"
+  - Modelo:
+      - "Arquitectura del Modelo": "model/architecture.md"
+      - "Pipeline de Entrenamiento": "model/training.md"
+      - "Versionado del Modelo": "model/versioning.md"
+      - "Seguimiento de Experimentos": "model/experiments.md"
   - MLOps:
-    - 'Pipeline Automation': 'mlops/automation.md'
-    - 'Reproducibility Guide': 'mlops/reproducibility.md'
-    - 'Environment Setup': 'mlops/environment.md'
-  - API Reference:
-    - 'Pipeline': 'api/pipeline.md'
-    - 'Models': 'api/models.md'
-    - 'Utils': 'api/utils.md'
-
+      - "Pipeline": "mlops/pipeline.md"
+      - "Automatización de Pipeline": "mlops/automation.md"
+      - "Guía de Reproducibilidad": "mlops/reproducibility.md"
+      - "Configuración del Entorno": "mlops/environment.md"
+  - Referencia de API:
+      - "Pipeline": "api/pipeline.md"
+      - "Modelos": "api/models.md"
+      - "Utilidades": "api/utils.md"
+  - API:
+      - "Descripción General": "api/index.md"
+      - "Conjunto de Datos": "api/dataset.md"
+      - "Configuración": "api/config.md"
+      - "Selección de Características": "api/feature_selection.md"
+      - "Características": "api/features.md"
+      - "Evaluación del Modelo": "api/model_evaluation_utils.md"
+      - "Entrenamiento": "api/modeling_train.md"
+      - "Predicción": "api/modeling_predict.md"
+      - "Gráficos": "api/plots.md"
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
