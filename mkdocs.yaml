@@ -41,15 +41,15 @@ nav:
       - "Modelos": "api/models.md"
       - "Utilidades": "api/utils.md"
   - API:
-      - "Descripción General": "api/index.md"
-      - "Conjunto de Datos": "api/dataset.md"
-      - "Configuración": "api/config.md"
-      - "Selección de Características": "api/feature_selection.md"
-      - "Características": "api/features.md"
-      - "Evaluación del Modelo": "api/model_evaluation_utils.md"
-      - "Entrenamiento": "api/modeling_train.md"
-      - "Predicción": "api/modeling_predict.md"
-      - "Gráficos": "api/plots.md"
+      - "Descripción General": "api/index.html"
+      - "Conjunto de Datos": "api/dataset.html"
+      - "Configuración": "api/config.html"
+      - "Selección de Características": "api/feature_selection.html"
+      - "Características": "api/features.html"
+      - "Evaluación del Modelo": "api/model_evaluation_utils.html"
+      - "Entrenamiento": "api/modeling/train.html"
+      - "Predicción": "api/modeling/predict.html"
+      - "Gráficos": "api/plots.html"
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences

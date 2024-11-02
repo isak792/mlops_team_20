@@ -20,38 +20,22 @@ def generate_docs():
     # Comando para generar la documentación
     cmd = [
         "pdoc",
-        "--html",
         "--output-dir", docs_dir,
-        "--force",
+        "--docformat", "google",
+        "--template-dir", ".",
         "turkish_music_emotion"
     ]
     
     # Ejecuta pdoc
     try:
+        print("Executing command:", " ".join(cmd))
         subprocess.run(cmd, check=True)
-        
-        # Convierte los archivos HTML a Markdown
-        for html_file in Path(docs_dir).rglob("*.html"):
-            # Lee el contenido HTML
-            with open(html_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
-            # Crea el archivo Markdown correspondiente
-            md_file = html_file.with_suffix('.md')
-            with open(md_file, 'w', encoding='utf-8') as f:
-                # Extrae el contenido relevante y dale formato Markdown
-                # Esto es una simplificación - podrías querer usar una biblioteca HTML parser
-                content = content.replace('<pre><code>', '```python\n')
-                content = content.replace('</code></pre>', '\n```')
-                f.write(content)
-            
-            # Elimina el archivo HTML
-            html_file.unlink()
-            
         print("Documentation generated successfully in", docs_dir)
         
     except subprocess.CalledProcessError as e:
         print("Error generating documentation:", e)
+        print("Try running the following command directly:")
+        print(f"PYTHONPATH={project_root} pdoc --output-dir {docs_dir} --docformat google turkish_music_emotion")
 
 if __name__ == "__main__":
     generate_docs()
