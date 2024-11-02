@@ -29,3 +29,10 @@ test:
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+
+docs:
+	pdoc --html --output-dir docs/api turkish_music_emotion
+	mkdocs build
+
+serve-docs:
+	mkdocs serve
