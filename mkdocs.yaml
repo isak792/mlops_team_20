@@ -52,10 +52,14 @@ nav:
       - "Gráficos": "api/plots.html"
 markdown_extensions:
   - pymdownx.highlight
-  - pymdownx.superfences
   - pymdownx.tabbed
   - pymdownx.arithmatex
   - admonition
   - footnotes
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - toc:
       permalink: true
