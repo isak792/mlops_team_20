@@ -53,20 +53,20 @@
 
 ### 2.6 Módulos en modeling/
 
--   [ ] train.py:
+-   [x] train.py:
     -   Documentar pipeline de entrenamiento
     -   Explicar hiperparámetros
     -   Incluir ejemplos de uso
--   [ ] predict.py:
+-   [x] predict.py:
     -   Documentar funciones de predicción
     -   Explicar formato de entrada/salida
     -   Incluir ejemplos de uso
 
 ### 2.7 Módulo plots.py
 
--   [ ] Añadir docstring a nivel módulo
--   [ ] Documentar funciones de visualización
--   [ ] Incluir ejemplos de gráficos generados
+-   [x] Añadir docstring a nivel módulo
+-   [x] Documentar funciones de visualización
+-   [x] Incluir ejemplos de gráficos generados
 
 ## 3. Documentación General del Proyecto
 
