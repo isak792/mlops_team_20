@@ -1,6 +1,4 @@
-# Getting Started
-
-Este repositorio contiene un proyecto de MLOps que implementa un pipeline completo de Machine Learning, desde la gestión y preprocesamiento de datos hasta el despliegue y automatización de modelos. Sigue los principios de MLOps para garantizar la reproducibilidad, escalabilidad y mantenimiento en producción. Utiliza el dataset Turkish Music Emotion el cual contiene canciones turcas etiquetadas con cuatro diferentes emociones: alegría, tristeza, ira y relajacion.
+# Guía de instalación rápida
 
 # Requisitos del sistema
 
@@ -11,9 +9,10 @@ Este repositorio contiene un proyecto de MLOps que implementa un pipeline comple
     * pandas
     * numpy
     * scikit-learn
+    * matplotlib
 
 
-# Guía de instalación rápida
+# Pasos a seguir
 
 1. Clona este repositorio:
    ```
