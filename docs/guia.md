@@ -72,35 +72,35 @@
 
 ### 3.1 README.md (Raíz del proyecto)
 
--   [ ] Descripción general del proyecto
--   [ ] Requisitos del sistema
--   [ ] Guía de instalación rápida
--   [ ] Ejemplos básicos de uso
+-   [x] Descripción general del proyecto
+-   [x] Requisitos del sistema
+-   [x] Guía de instalación rápida
+-   [x] Ejemplos básicos de uso
 -   [ ] Enlaces a documentación detallada
 
 ### 3.2 Documentación de Usuario (docs/getting-started/)
 
--   [ ] installation.md: Guía detallada de instalación
--   [ ] quickstart.md: Tutorial básico
--   [ ] examples.md: Ejemplos de uso común
+-   [x] installation.md: Guía detallada de instalación
+-   [x] quickstart.md: Tutorial básico
+-   [x] examples.md: Ejemplos de uso común
 
 ### 3.3 Documentación de Datos (docs/data/)
 
--   [ ] overview.md: Descripción del dataset
--   [ ] preprocessing.md: Proceso de preprocesamiento
--   [ ] features.md: Explicación de características
+-   [x] overview.md: Descripción del dataset
+-   [x] preprocessing.md: Proceso de preprocesamiento
+-   [x] features.md: Explicación de características
 
 ### 3.4 Documentación del Modelo (docs/model/)
 
--   [ ] architecture.md: Arquitectura del modelo
--   [ ] training.md: Proceso de entrenamiento
--   [ ] evaluation.md: Métricas y evaluación
--   [ ] inference.md: Guía de inferencia
+-   [x] architecture.md: Arquitectura del modelo
+-   [x] training.md: Proceso de entrenamiento
+-   [x] evaluation.md: Métricas y evaluación
+-   [x] inference.md: Guía de inferencia
 
 ### 3.5 Documentación MLOps (docs/mlops/)
 
--   [ ] pipeline.md
--   [ ] reproducibility.md: Guía de reproducibilidad
+-   [x] pipeline.md
+-   [x] reproducibility.md: Guía de reproducibilidad
 -   [ ] deployment.md: Guía de despliegue
 
 ## 4. Ejemplo de Formato para Docstrings
