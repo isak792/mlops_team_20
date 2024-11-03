@@ -1,5 +1,6 @@
 from pathlib import Path
 from loguru import logger
+import numpy as np
 import pandas as pd
 import yaml
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -40,8 +41,11 @@ class DataHandler:
         analyzer = MissingValueAnalyzer(self.data)
         missing_columns = analyzer.get_missing_columns()
         analyzer.display_missing_columns()
+
+        # Manejo de valores extremos
+        self.data.replace([np.inf, -np.inf], np.nan, inplace=True)  # Reemplazar infinitos por NaN
         
-        # Continue with data processing
+        # Continue with data processing para eliminar filas con NaN
         self.data.dropna(inplace=True)
         logger.success("Data processed successfully.")
         return self.data
@@ -50,8 +54,13 @@ class DataHandler:
         if self.data is None:
             logger.warning("No data loaded. Load data before scaling.")
             return
-        scaler = StandardScaler()
+        
         numeric_cols = self.data.select_dtypes(include=['float64', 'int64']).columns
+        
+        # Eliminar columnas con desviación estándar de cero
+        numeric_cols = numeric_cols[self.data[numeric_cols].std() != 0]
+        
+        scaler = StandardScaler()
         self.data[numeric_cols] = scaler.fit_transform(self.data[numeric_cols])
         logger.success("Data scaled successfully.")
         return self.data

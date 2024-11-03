@@ -33,6 +33,10 @@ class ModelPredictor:
             self.load_label_encoder()
         if self.test_indices is None:
             self.load_test_indices()
+        
+        # Verifica si el DataFrame de entrada está vacío
+        if X.empty:
+           raise ValueError("El DataFrame de entrada está vacío. No se pueden hacer predicciones.")
 
         X_test = X.loc[self.test_indices]
         predictions = self.model.predict(X_test)
