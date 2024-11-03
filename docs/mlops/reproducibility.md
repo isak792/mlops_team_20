@@ -1,1 +1,29 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"authorship_tag":"ABX9TyPu1//KpE5rHt+PjqEN4WF8"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"markdown","source":["## Reproducibilidad del experimento de clasificación de emociones en la música turca\n","\n","### Entorno de trabajo\n","* **Software:** Python 3.12, scikit-learn\n","\n","### Datos\n","* **Fuente de los datos:** UC Irvine Machine Learnig Repository\n","\n","https://archive.ics.uci.edu/dataset/862/turkish+music+emotion\n","\n","* **Formato de los datos:** Tabular, csv.\n","\n","### Código\n","* **Repositorio:** https://github.com/isak792/mlops_team_20/\n","\n","\n","### Entrenamiento del modelo\n","* **Hiperparámetros:**\n","\n","    Random Forest: n_estimators: 50, max_depth: 5\n","\n","    SVM: C: 1.0, kernel: 'rbf', gamma: 'scale'\n","\n","    KNN: n_neighbors: 5\n","\n","### Evaluación del modelo\n","* **Métricas:** Accuracy, F1-score, recall y precision.\n","* **Resultados:** Accuracy de 92% en el conjunto de prueba"],"metadata":{"id":"JtWK3_iXT5ij"}}]}
+## Reproducibilidad del experimento de clasificación de emociones en la música turca
+
+### Entorno de trabajo
+* **Software:** Python 3.12, scikit-learn
+
+### Datos
+* **Fuente de los datos:** UC Irvine Machine Learnig Repository
+
+https://archive.ics.uci.edu/dataset/862/turkish+music+emotion
+
+* **Formato de los datos:** Tabular, csv.
+
+### Código
+* **Repositorio:** https://github.com/isak792/mlops_team_20/
+
+
+### Entrenamiento del modelo
+* **Hiperparámetros:**
+
+    Random Forest: n_estimators: 50, max_depth: 5
+
+    SVM: C: 1.0, kernel: 'rbf', gamma: 'scale'
+
+    KNN: n_neighbors: 5
+
+### Evaluación del modelo
+* **Métricas:** Accuracy, F1-score, recall y precision.
+* **Resultados:** Accuracy de 92% en el conjunto de prueba
+"""
