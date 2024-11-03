@@ -1,0 +1,62 @@
+site_name: Proyecto ML de Emociones en Música Turca
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append(".")
+          selection:
+            docstring_style: google
+nav:
+  - Inicio: "index.md"
+  - Pendientes: "guia.md"
+  - Primeros Pasos:
+      - "Instalación": "getting-started/installation.md"
+      - "Ejemplos": "getting-started/examples.md"
+      - "Quickstart": "getting-started/quickstart.md"
+  - Datos:
+      - "Descripción General de Datos": "data/overview.md"
+      - "Caracteristicas": "data/features.md"
+      - "Pre-procesamiento": "data/preprocessing.md"
+  - Modelo:
+      - "Arquitectura del Modelo": "model/architecture.md"
+      - "Pipeline de Entrenamiento": "model/training.md"
+      - "Evaluación del Modelo": "model/evaluation.md"
+      - "Inferencia": "model/inference.md"
+  - MLOps:
+      - "Pipeline": "mlops/pipeline.md"
+      - "Guía de Reproducibilidad": "mlops/reproducibility.md"
+  - Referencia de API:
+      - "Pipeline": "api/pipeline.md"
+  - API:
+      - "Descripción General": "api/index.html"
+      - "Conjunto de Datos": "api/dataset.html"
+      - "Configuración": "api/config.html"
+      - "Selección de Características": "api/feature_selection.html"
+      - "Características": "api/features.html"
+      - "Evaluación del Modelo": "api/model_evaluation_utils.html"
+      - "Entrenamiento": "api/modeling/train.html"
+      - "Predicción": "api/modeling/predict.html"
+      - "Gráficos": "api/plots.html"
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.arithmatex
+  - admonition
+  - footnotes
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true
