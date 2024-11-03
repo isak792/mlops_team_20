@@ -1,1 +1,50 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"authorship_tag":"ABX9TyMQWqlZvpiquXeJD7cJs8ZO"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"markdown","source":["# Getting Started\n","\n","Este repositorio contiene un proyecto de MLOps que implementa un pipeline completo de Machine Learning, desde la gestión y preprocesamiento de datos hasta el despliegue y automatización de modelos. Sigue los principios de MLOps para garantizar la reproducibilidad, escalabilidad y mantenimiento en producción. Utiliza el dataset Turkish Music Emotion el cual contiene canciones turcas etiquetadas con cuatro diferentes emociones: alegría, tristeza, ira y relajacion.\n","\n","# Requisitos del sistema\n","\n","- Python 3.12\n","- pip\n","- make\n","- Librerías:\n","    * pandas\n","    * numpy\n","    * scikit-learn\n","\n","\n","# Guía de instalación rápida\n","\n","1. Clona este repositorio:\n","   ```\n","   git clone https://github.com/isak792/mlops_team_20.git\n","   cd mlops_team_20\n","   ```\n","   \n","2. Crea y activa el entorno virtual, e instala las dependencias:\n","\n","   ```bash\n","   python3 -m venv mlops_tme_venv\n","   ```\n","\n","   Para dispositivos Windows, el código para activar el ambiente es el siguiente:\n","   ```bash\n","   mlops_tme_venv\\Scripts\\activate\n","   ```\n","\n","   Para dispositivos MacOS y Linux:\n","   ```bash\n","   source mlops_tme_venv/bin/activate\n","   ```\n","3. Configura el entorno de Desarrollo e instala dependencias\n","\n","  ```\n","  make setup\n","  ```\n","\n","4. Para ejecutar el proyecto, usa:\n","  \n","  ```bash\n","  python run_pipeline.py\n","  ```\n"],"metadata":{"id":"Ed1vjQ8kmemz"}}]}
+# Getting Started
+
+Este repositorio contiene un proyecto de MLOps que implementa un pipeline completo de Machine Learning, desde la gestión y preprocesamiento de datos hasta el despliegue y automatización de modelos. Sigue los principios de MLOps para garantizar la reproducibilidad, escalabilidad y mantenimiento en producción. Utiliza el dataset Turkish Music Emotion el cual contiene canciones turcas etiquetadas con cuatro diferentes emociones: alegría, tristeza, ira y relajacion.
+
+# Requisitos del sistema
+
+- Python 3.12
+- pip
+- make
+- Librerías:
+    * pandas
+    * numpy
+    * scikit-learn
+
+
+# Guía de instalación rápida
+
+1. Clona este repositorio:
+   ```
+   git clone https://github.com/isak792/mlops_team_20.git
+   cd mlops_team_20
+   ```
+   
+2. Crea y activa el entorno virtual, e instala las dependencias:
+
+   ```bash
+   python3 -m venv mlops_tme_venv
+   ```
+
+   Para dispositivos Windows, el código para activar el ambiente es el siguiente:
+   ```bash
+   mlops_tme_venv\Scripts\activate
+   ```
+
+   Para dispositivos MacOS y Linux:
+   ```bash
+   source mlops_tme_venv/bin/activate
+   ```
+3. Configura el entorno de Desarrollo e instala dependencias
+
+  ```
+  make setup
+  ```
+
+4. Para ejecutar el proyecto, usa:
+  
+  ```bash
+  python run_pipeline.py
+  ```
+"""

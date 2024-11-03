@@ -1,1 +1,135 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"authorship_tag":"ABX9TyPoZNt+QY8WByvtFrf3YSAN"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"markdown","source":["# Descripción general del proyecto\n","\n","Este repositorio contiene un proyecto de MLOps que implementa un pipeline completo de Machine Learning, desde la gestión y preprocesamiento de datos hasta el despliegue y automatización de modelos. Sigue los principios de MLOps para garantizar la reproducibilidad, escalabilidad y mantenimiento en producción.\n","\n","Se está usando el dataset Turkish Music Emotion el cual contiene canciones turcas etiquetadas con cuatro diferentes emociones: alegría, tristeza, ira y relajacion. Este dataset considera un total de 100 piezas musicales para cada clase, de manera que, se tiene el mismo número de muestras para cada clase. Entre las características que se encuentran en el dataset están el tempo, la tonalidad, el ritmo, y otras características acústicas.\n","\n","La princiapal aplicación de este proyecto es la clasificación de emociones en la música.\n","Este tipo de investigaciones permite crear sistemas de recomendación musical basados en el estado de ánimo y tiene aplicaciones interesantes en la musicoterapia y la inteligencia artificial para la música.\n","\n","\n","Referencia:\n","Bilal Er, M., & Aydilek, I. B. (2019). Music emotion recognition by using chroma spectrogram and deep visual features. Journal of Computational Intelligent Systems, 12(2), 1622–1634. International Journal of Computational Intelligence Systems, DOI: https://doi.org/10.2991/ijcis.d.191216.001 \"\"\"\n","\n","# Requisitos del sistema\n","\n","- Python 3.12\n","- pip\n","- make\n","- Librerías:\n","    * pandas\n","    * numpy\n","    * scikit-learn\n","\n","\n","# Guía de instalación rápida\n","\n","1. Clona este repositorio:\n","   ```\n","   git clone https://github.com/isak792/mlops_team_20.git\n","   cd mlops_team_20\n","   ```\n","   \n","2. Crea y activa el entorno virtual, e instala las dependencias:\n","\n","   ```bash\n","   python3 -m venv mlops_tme_venv\n","   ```\n","\n","   Para dispositivos Windows, el código para activar el ambiente es el siguiente:\n","   ```bash\n","   mlops_tme_venv\\Scripts\\activate\n","   ```\n","\n","   Para dispositivos MacOS y Linux:\n","   ```bash\n","   source mlops_tme_venv/bin/activate\n","   ```\n","\n","# Configuración del Entorno de Desarrollo y Dependencias\n","\n","El siguiente comando se utiliza para instalar todas las dependencias.\n","Además, este proyecto utiliza pre-commit hooks para mantener la calidad del código. Para configurar el entorno de desarrollo:\n","\n","```\n","make setup\n","```\n","\n","Este comando instalará pre-commit y configurará los hooks necesarios.\n","\n","# Organización del Proyecto\n","\n","```\n","├── LICENSE\n","├── Makefile                <- Makefile con comandos como `make data` o `make train`\n","├── README.md               <- El README de nivel superior para desarrolladores que usan este proyecto.\n","├── data\n","│   ├── external            <- Datos de fuentes de terceros.\n","│   ├── interim             <- Datos intermedios que han sido transformados.\n","│   ├── processed           <- Los conjuntos de datos finales, canónicos para modelado.\n","│   └── raw                 <- El volcado de datos original e inmutable.\n","│\n","├── docs                    <- Un proyecto mkdocs por defecto; ver www.mkdocs.org para detalles\n","│\n","├── models                  <- Modelos entrenados y serializados, predicciones de modelos o resúmenes de modelos\n","│\n","├── notebooks               <- Jupyter notebooks. La convención de nomenclatura es un número (para ordenar),\n","│                         las iniciales del creador y una breve descripción delimitada por `-`, p.ej.\n","│                         `1.0-jqp-exploracion-inicial-de-datos`.\n","│\n","├── references              <- Diccionarios de datos, manuales y todos los demás materiales explicativos.\n","│\n","├── reports                 <- Análisis generado como HTML, PDF, LaTeX, etc.\n","│   └── figures             <- Gráficos y figuras generadas para ser usadas en informes\n","│\n","├── requirements.txt        <- El archivo de requisitos para reproducir el entorno de análisis,\n","│                         generado con `pip freeze > requirements.txt`\n","│\n","├── setup.cfg               <- Archivo de configuración para flake8\n","├── pyproject.toml          <- Archivo de configuración del proyecto\n","│\n","├── .pre-commit-config.yaml <- Configuración para pre-commit hooks\n","│\n","│── turkish_music_emotion   <- Código fuente para uso en este proyecto.\n","│   ├── __init__.py         <- Hace que mlops sea un módulo Python\n","│   ├── config.py           <- Almacena variables útiles y configuración\n","│   ├── dataset.py          <- Scripts para descargar o generar datos\n","│   ├── features.py         <- Código para crear características para modelado\n","│   ├── modeling\n","│   │   ├── __init__.py\n","│   │   ├── predict.py      <- Código para ejecutar inferencia de modelos con modelos entrenados\n","│   │   └── train.py        <- Código para entrenar modelos\n","│   └── plots.py            <- Código para crear visualizaciones\n","│\n","│── dvc.yaml                <- Configuración del Pipeline DVC\n","│\n","│── params.yaml             <- Parámetros utilizados por el pipeline\n","│\n","└── run_pipeline.py         <- Archivo que define los pasos a seguir por el pipeline\n","```\n","\n","# Calidad del Código\n","\n","Este proyecto utiliza las siguientes herramientas para mantener la calidad del código:\n","\n","- Black: Para formateo de código\n","- isort: Para ordenar las importaciones\n","- Flake8: Para hacer cumplir la guía de estilo\n","\n","Estas herramientas se ejecutan automáticamente en cada commit a través de pre-commit hooks.\n","\n","Para ejecutar estas herramientas manualmente, puedes usar:\n","\n","```\n","make lint\n","\n","# Ejemplo básico de uso\n","\n","Carga y despliegue de los datos de entrada originales\n","\n","from turkish_music_emotion.dataset import DataHandler\n","\n","df = dh.load_data('/data/raw/Acoustic Features.csv')\n","\n","df"],"metadata":{"id":"Ed1vjQ8kmemz"}}]}
+# Descripción general del proyecto
+
+Este repositorio contiene un proyecto de MLOps que implementa un pipeline completo de Machine Learning, desde la gestión y preprocesamiento de datos hasta el despliegue y automatización de modelos. Sigue los principios de MLOps para garantizar la reproducibilidad, escalabilidad y mantenimiento en producción.
+
+Se está usando el dataset Turkish Music Emotion el cual contiene canciones turcas etiquetadas con cuatro diferentes emociones: alegría, tristeza, ira y relajacion. Este dataset considera un total de 100 piezas musicales para cada clase, de manera que, se tiene el mismo número de muestras para cada clase. Entre las características que se encuentran en el dataset están el tempo, la tonalidad, el ritmo, y otras características acústicas.
+
+La princiapal aplicación de este proyecto es la clasificación de emociones en la música.
+Este tipo de investigaciones permite crear sistemas de recomendación musical basados en el estado de ánimo y tiene aplicaciones interesantes en la musicoterapia y la inteligencia artificial para la música.
+
+
+Referencia:
+Bilal Er, M., & Aydilek, I. B. (2019). Music emotion recognition by using chroma spectrogram and deep visual features. Journal of Computational Intelligent Systems, 12(2), 1622–1634. International Journal of Computational Intelligence Systems, DOI: https://doi.org/10.2991/ijcis.d.191216.001 '''
+
+# Requisitos del sistema
+
+- Python 3.12
+- pip
+- make
+- Librerías:
+    * pandas
+    * numpy
+    * scikit-learn
+
+
+# Guía de instalación rápida
+
+1. Clona este repositorio:
+   ```
+   git clone https://github.com/isak792/mlops_team_20.git
+   cd mlops_team_20
+   ```
+   
+2. Crea y activa el entorno virtual, e instala las dependencias:
+
+   ```bash
+   python3 -m venv mlops_tme_venv
+   ```
+
+   Para dispositivos Windows, el código para activar el ambiente es el siguiente:
+   ```bash
+   mlops_tme_venv\Scripts\activate
+   ```
+
+   Para dispositivos MacOS y Linux:
+   ```bash
+   source mlops_tme_venv/bin/activate
+   ```
+
+# Configuración del Entorno de Desarrollo y Dependencias
+
+El siguiente comando se utiliza para instalar todas las dependencias.
+Además, este proyecto utiliza pre-commit hooks para mantener la calidad del código. Para configurar el entorno de desarrollo:
+
+```
+make setup
+```
+
+Este comando instalará pre-commit y configurará los hooks necesarios.
+
+# Organización del Proyecto
+
+```
+├── LICENSE
+├── Makefile                <- Makefile con comandos como `make data` o `make train`
+├── README.md               <- El README de nivel superior para desarrolladores que usan este proyecto.
+├── data
+│   ├── external            <- Datos de fuentes de terceros.
+│   ├── interim             <- Datos intermedios que han sido transformados.
+│   ├── processed           <- Los conjuntos de datos finales, canónicos para modelado.
+│   └── raw                 <- El volcado de datos original e inmutable.
+│
+├── docs                    <- Un proyecto mkdocs por defecto; ver www.mkdocs.org para detalles
+│
+├── models                  <- Modelos entrenados y serializados, predicciones de modelos o resúmenes de modelos
+│
+├── notebooks               <- Jupyter notebooks. La convención de nomenclatura es un número (para ordenar),
+│                         las iniciales del creador y una breve descripción delimitada por `-`, p.ej.
+│                         `1.0-jqp-exploracion-inicial-de-datos`.
+│
+├── references              <- Diccionarios de datos, manuales y todos los demás materiales explicativos.
+│
+├── reports                 <- Análisis generado como HTML, PDF, LaTeX, etc.
+│   └── figures             <- Gráficos y figuras generadas para ser usadas en informes
+│
+├── requirements.txt        <- El archivo de requisitos para reproducir el entorno de análisis,
+│                         generado con `pip freeze > requirements.txt`
+│
+├── setup.cfg               <- Archivo de configuración para flake8
+├── pyproject.toml          <- Archivo de configuración del proyecto
+│
+├── .pre-commit-config.yaml <- Configuración para pre-commit hooks
+│
+│── turkish_music_emotion   <- Código fuente para uso en este proyecto.
+│   ├── __init__.py         <- Hace que mlops sea un módulo Python
+│   ├── config.py           <- Almacena variables útiles y configuración
+│   ├── dataset.py          <- Scripts para descargar o generar datos
+│   ├── features.py         <- Código para crear características para modelado
+│   ├── modeling
+│   │   ├── __init__.py
+│   │   ├── predict.py      <- Código para ejecutar inferencia de modelos con modelos entrenados
+│   │   └── train.py        <- Código para entrenar modelos
+│   └── plots.py            <- Código para crear visualizaciones
+│
+│── dvc.yaml                <- Configuración del Pipeline DVC
+│
+│── params.yaml             <- Parámetros utilizados por el pipeline
+│
+└── run_pipeline.py         <- Archivo que define los pasos a seguir por el pipeline
+```
+
+# Calidad del Código
+
+Este proyecto utiliza las siguientes herramientas para mantener la calidad del código:
+
+- Black: Para formateo de código
+- isort: Para ordenar las importaciones
+- Flake8: Para hacer cumplir la guía de estilo
+
+Estas herramientas se ejecutan automáticamente en cada commit a través de pre-commit hooks.
+
+Para ejecutar estas herramientas manualmente, puedes usar:
+
+```
+make lint
+
+# Ejemplo básico de uso
+
+Carga y despliegue de los datos de entrada originales
+
+from turkish_music_emotion.dataset import DataHandler
+
+df = dh.load_data('/data/raw/Acoustic Features.csv')
+
+df
+"""
