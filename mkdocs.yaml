@@ -21,25 +21,22 @@ nav:
   - Pendientes: "guia.md"
   - Primeros Pasos:
       - "Instalación": "getting-started/installation.md"
-      - "Configuración del Proyecto": "getting-started/project-setup.md"
+      - "Ejemplos": "getting-started/examples.md"
+      - "Quickstart": "getting-started/quickstart.md"
   - Datos:
       - "Descripción General de Datos": "data/overview.md"
-      - "Pipeline de Datos": "data/pipeline.md"
-      - "Versionado de Datos": "data/versioning.md"
+      - "Caracteristicas": "data/features.md"
+      - "Pre-procesamiento": "data/preprocessing.md"
   - Modelo:
       - "Arquitectura del Modelo": "model/architecture.md"
       - "Pipeline de Entrenamiento": "model/training.md"
-      - "Versionado del Modelo": "model/versioning.md"
-      - "Seguimiento de Experimentos": "model/experiments.md"
+      - "Evaluación del Modelo": "model/evaluation.md"
+      - "Inferencia": "model/inference.md"
   - MLOps:
       - "Pipeline": "mlops/pipeline.md"
-      - "Automatización de Pipeline": "mlops/automation.md"
       - "Guía de Reproducibilidad": "mlops/reproducibility.md"
-      - "Configuración del Entorno": "mlops/environment.md"
   - Referencia de API:
       - "Pipeline": "api/pipeline.md"
-      - "Modelos": "api/models.md"
-      - "Utilidades": "api/utils.md"
   - API:
       - "Descripción General": "api/index.html"
       - "Conjunto de Datos": "api/dataset.html"
