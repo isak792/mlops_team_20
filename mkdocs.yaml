@@ -18,7 +18,7 @@ plugins:
             docstring_style: google
 nav:
   - Inicio: "index.md"
-  - Pendientes: "guia.md"
+  - Gobernanza: "governance.md"
   - Primeros Pasos:
       - "Instalación": "getting-started/installation.md"
       - "Ejemplos": "getting-started/examples.md"
